@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------
+   Design tokens — "Ink & Ember": warm paper/near-black backgrounds,
+   rust-orange accent. Rebranding this project should always mean
+   editing only this file's two blocks. All pairs verified against
+   WCAG AA (4.5:1) — see references/theme-method.md for the script.
+   --------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F6F4F0; /* warm paper, not pure white */
+  --surface: #FFFFFF; /* raised surfaces: cards, panels, inputs */
+  --border: #E4E0D8; /* dividers */
+  --foreground: #17181B; /* body/heading text — not pure black */
+  --muted: #5C6066; /* secondary text */
+  --accent: #B8360C; /* primary actions, links, emphasis — rust ember */
+  --accent-foreground: #FFFFFF; /* text/icon color placed ON the accent */
+
+  /* Semantic tones — kept separate from --accent so they retain meaning
+     if the brand accent changes. */
+  --tone-positive: #1F9D55;
+  --tone-caution: #B45309;
+  --tone-critical: #C81E3A;
+
+  /* Hero constellation (ParticleField). Separate from --accent so hero
+     motion can be retuned without moving buttons and links with it. */
+  --particle: #B8360C;
+  --particle-opacity: 0.34;
+  --particle-link-opacity: 0.11;
+
+  /* Ambient wash (AmbientBackground). RGB triples, not hex — warm ember
+     + cool navy for a duotone sense of depth behind every page. */
+  --ambient-one: 184 54 12; /* ember */
+  --ambient-two: 29 53 87; /* deep navy */
+  --ambient-strength: 0.05;
+  --grain-opacity: 0.035;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0B0C0E;
+    --surface: #17191C;
+    --border: #2A2D31;
+    --foreground: #F2F1ED;
+    --muted: #A6ABB2;
+    --accent: #FF7A45;
+    --accent-foreground: #0B0C0E;
+
+    --tone-positive: #34D399;
+    --tone-caution: #FBBF24;
+    --tone-critical: #F87171;
+
+    --particle: #FF7A45;
+    --particle-opacity: 0.3;
+    --particle-link-opacity: 0.1;
+
+    --ambient-one: 255 122 69;
+    --ambient-two: 56 97 168;
+    --ambient-strength: 0.07;
+    --grain-opacity: 0.05;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-positive: var(--tone-positive);
+  --color-caution: var(--tone-caution);
+  --color-critical: var(--tone-critical);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* System font stack — deliberately not next/font/google. See
+     references/critical-fixes.md #3: that loader fetches from Google's
+     servers during compilation and can silently stall the dev server on a
+     network that can't reach it quickly. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas,
+    "SFMono-Regular", Menlo, monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Respect users who ask for less motion. Non-negotiable baseline. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible focus for keyboard users. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Selection picks up the accent rather than the browser default blue. */
+::selection {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--foreground);
 }
