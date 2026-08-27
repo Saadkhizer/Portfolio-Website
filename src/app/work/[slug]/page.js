@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/motion/Reveal";
 import { PROJECTS, getProject } from "@/data/projects";
@@ -72,6 +73,19 @@ export default async function ProjectPage({ params }) {
           )}
         </div>
       </Reveal>
+
+      {project.image && (
+        <Reveal delay={0.14}>
+          <Image
+            src={project.image}
+            alt={project.imageAlt || ""}
+            width={1200}
+            height={657}
+            className="mt-14 h-auto w-full rounded-2xl border border-border"
+            priority
+          />
+        </Reveal>
+      )}
 
       <Reveal delay={0.16}>
         <section className="mt-16">

@@ -28,6 +28,11 @@ export const PROJECTS = [
       "JWT",
       "Google OAuth",
     ],
+    // Screenshot of the live site. Lives in /public so next/image can serve
+    // it without a remote host allowlist. 1200px wide is enough for a card
+    // and a case-study header without shipping a needlessly large file.
+    image: "/projects/hafsum.jpg",
+    imageAlt: "The Hafsum Coffee & Cake homepage, showing the menu navigation and ordering call to action",
     liveUrl: "https://hafsum.vercel.app/",
     repoUrl: "https://github.com/Saadkhizer/hafsum",
     highlights: [

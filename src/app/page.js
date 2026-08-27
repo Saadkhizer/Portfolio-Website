@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Reveal from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import MagneticButton from "@/components/motion/MagneticButton";
@@ -89,9 +90,9 @@ export default function Home() {
 
       {/* ---------------------------------------------------------- Work */}
       <section id="work" className="mx-auto max-w-6xl px-6 py-24">
-        <SectionHeading index="02" label="Work" title="Selected projects">
-          Live links and the source code for each one. Open anything and judge it
-          yourself.
+        <SectionHeading index="02" label="Work" title="Projects I have built">
+          Every one of these is live, with the source code open. Click through and
+          judge the work yourself.
         </SectionHeading>
 
         {/* One project should not sit in a half-empty two-column grid. The grid
@@ -103,7 +104,21 @@ export default function Home() {
         >
           {PROJECTS.map((project) => (
             <StaggerItem key={project.slug}>
-              <article className="flex h-full flex-col rounded-2xl border border-border bg-surface/70 p-7 backdrop-blur transition-colors hover:border-accent/40">
+              <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/70 backdrop-blur transition-colors hover:border-accent/40">
+                {project.image && (
+                  <Link href={`/work/${project.slug}`} className="block border-b border-border">
+                    <Image
+                      src={project.image}
+                      alt={project.imageAlt || ""}
+                      width={1200}
+                      height={657}
+                      className="h-auto w-full"
+                      priority
+                    />
+                  </Link>
+                )}
+
+                <div className="flex flex-1 flex-col p-7">
                 <p className="font-mono text-xs uppercase tracking-wider text-accent">
                   {project.tagline}
                 </p>
@@ -155,6 +170,7 @@ export default function Home() {
                       Source ↗
                     </a>
                   )}
+                </div>
                 </div>
               </article>
             </StaggerItem>
