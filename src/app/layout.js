@@ -33,7 +33,18 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        {/* Runs before first paint: reads the saved choice and stamps
+            data-theme on <html> so the page never renders in the wrong
+            theme and then snaps. Deliberately tiny and synchronous —
+            anything async here reintroduces the flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">
         <AmbientBackground />
         {/* Fixed behind every section rather than scoped to the hero, so the

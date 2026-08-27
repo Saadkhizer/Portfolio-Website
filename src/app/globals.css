@@ -3,8 +3,19 @@
 /* ---------------------------------------------------------------
    Design tokens — "Ink & Ember": warm paper/near-black backgrounds,
    rust-orange accent. Rebranding this project should always mean
-   editing only this file's two blocks. All pairs verified against
+   editing only this file's token blocks. All pairs verified against
    WCAG AA (4.5:1) — see references/theme-method.md for the script.
+
+   THEME HAS THREE STATES, not two:
+     1. no data-theme attribute  → follow the operating system
+     2. data-theme="light"       → user explicitly chose light
+     3. data-theme="dark"        → user explicitly chose dark
+
+   So the dark values appear twice: once inside the OS-preference
+   media query (guarded so an explicit "light" choice still wins),
+   and once under [data-theme="dark"] so the toggle beats the OS.
+   Defining a colour only inside a media query is the classic bug —
+   the toggle then cannot override it.
    --------------------------------------------------------------- */
 :root {
   --background: #F6F4F0; /* warm paper, not pure white */
@@ -23,20 +34,28 @@
 
   /* Hero constellation (ParticleField). Separate from --accent so hero
      motion can be retuned without moving buttons and links with it. */
-  --particle: #B8360C;
-  --particle-opacity: 0.34;
-  --particle-link-opacity: 0.11;
+  /* Three stops, blended across the field: warm -> violet -> teal. The
+     first stop stays close to --accent so the motion still feels like part
+     of the brand rather than a separate decoration. */
+  --particle: #C2410C; /* ember */
+  --particle-two: #6D28D9; /* violet */
+  --particle-three: #0E7490; /* teal */
+  --particle-opacity: 0.58;
+  --particle-link-opacity: 0.24;
 
   /* Ambient wash (AmbientBackground). RGB triples, not hex — warm ember
      + cool navy for a duotone sense of depth behind every page. */
   --ambient-one: 184 54 12; /* ember */
   --ambient-two: 29 53 87; /* deep navy */
-  --ambient-strength: 0.05;
+  --ambient-strength: 0.09;
   --grain-opacity: 0.035;
+
+  color-scheme: light;
 }
 
+/* State 1 — follow the OS, unless the user explicitly picked light. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #0B0C0E;
     --surface: #17191C;
     --border: #2A2D31;
@@ -49,15 +68,47 @@
     --tone-caution: #FBBF24;
     --tone-critical: #F87171;
 
-    --particle: #FF7A45;
-    --particle-opacity: 0.3;
-    --particle-link-opacity: 0.1;
+    --particle: #FF7A45; /* ember */
+    --particle-two: #A78BFA; /* violet */
+    --particle-three: #38BDF8; /* sky */
+    --particle-opacity: 0.55;
+    --particle-link-opacity: 0.18;
 
     --ambient-one: 255 122 69;
     --ambient-two: 56 97 168;
     --ambient-strength: 0.07;
     --grain-opacity: 0.05;
+
+    color-scheme: dark;
   }
+}
+
+/* State 3 — explicit dark, wins regardless of what the OS prefers. */
+:root[data-theme="dark"] {
+  --background: #0B0C0E;
+  --surface: #17191C;
+  --border: #2A2D31;
+  --foreground: #F2F1ED;
+  --muted: #A6ABB2;
+  --accent: #FF7A45;
+  --accent-foreground: #0B0C0E;
+
+  --tone-positive: #34D399;
+  --tone-caution: #FBBF24;
+  --tone-critical: #F87171;
+
+  --particle: #FF7A45; /* ember */
+  --particle-two: #A78BFA; /* violet */
+  --particle-three: #38BDF8; /* sky */
+  --particle-opacity: 0.55;
+  --particle-link-opacity: 0.18;
+
+  --ambient-one: 255 122 69;
+  --ambient-two: 56 97 168;
+  --ambient-strength: 0.07;
+  --grain-opacity: 0.05;
+
+  color-scheme: dark;
 }
 
 @theme inline {

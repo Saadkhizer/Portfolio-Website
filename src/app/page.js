@@ -4,12 +4,14 @@ import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import MagneticButton from "@/components/motion/MagneticButton";
 import SectionHeading from "@/components/SectionHeading";
 import { PROJECTS } from "@/data/projects";
-import { PROFILE, SERVICES, STACK, PROCESS, ABOUT } from "@/data/site";
+import { PROFILE, SERVICES, STACK, PROCESS, ABOUT, whatsappLink } from "@/data/site";
 
 /* The constellation field is rendered once in the root layout and fixed
    behind every section, so nothing is drawn here. */
 
 export default function Home() {
+  const whatsapp = whatsappLink();
+
   return (
     <>
       {/* ---------------------------------------------------------- Hero */}
@@ -263,6 +265,18 @@ export default function Home() {
                   {PROFILE.email}
                 </MagneticButton>
               </a>
+
+              {whatsapp && (
+                <a
+                  href={whatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-border px-6 py-3 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
+                >
+                  WhatsApp
+                </a>
+              )}
+
               <a
                 href={PROFILE.github}
                 target="_blank"
@@ -271,7 +285,22 @@ export default function Home() {
               >
                 GitHub
               </a>
+
+              {PROFILE.linkedin && (
+                <a
+                  href={PROFILE.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-border px-6 py-3 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
+                >
+                  LinkedIn
+                </a>
+              )}
             </div>
+
+            <p className="mt-8 font-mono text-xs text-muted">
+              Based in {PROFILE.location} &middot; replies within a day
+            </p>
           </div>
         </Reveal>
       </section>

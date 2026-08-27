@@ -16,7 +16,24 @@ export const PROFILE = {
   github: "https://github.com/Saadkhizer",
   location: "Islamabad, Pakistan",
   available: true,
+
+  // Leave a channel as an empty string and its button simply does not render.
+  // Better a missing button than one that goes nowhere.
+  //
+  // whatsapp: digits only, with country code and no "+" or spaces.
+  //   e.g. 923001234567  ->  https://wa.me/923001234567
+  whatsapp: "923365204441",
+  linkedin: "https://www.linkedin.com/in/sheikh-mohammad-saad-khizar-a5410a324",
 };
+
+/** Prefilled WhatsApp link, or null when no number is configured. */
+export function whatsappLink() {
+  if (!PROFILE.whatsapp) return null;
+  const text = encodeURIComponent(
+    "Hi Saad, I saw your portfolio and I'd like to talk about a project."
+  );
+  return `https://wa.me/${PROFILE.whatsapp}?text=${text}`;
+}
 
 export const SERVICES = [
   {
@@ -74,7 +91,8 @@ export const PROCESS = [
 ];
 
 export const ABOUT = [
-  "I am a self-taught full-stack developer based in Islamabad. I build the whole thing — the interface people click on, the API behind it, the authentication, and the deployment that keeps it online.",
-  "Most of what I have built so far is for small businesses: the kind where the owner is also the one answering the phone, and a website has to earn its cost. That shapes how I work. I would rather explain a trade-off in plain language than hand over something you cannot maintain.",
-  "I am taking on freelance projects now. If you have something in mind, tell me what it needs to do and I will tell you honestly whether I am the right person to build it.",
+  "I am a full-stack developer based in Islamabad. I trained in the MERN stack with Nexsuberry Training & Solutions, and most of what I know past that came from building real things and getting them working.",
+  "I build the whole thing: the interface people click on, the API behind it, the login, and the deployment that keeps it online. Most of my work so far has been for small businesses, where the owner is often the same person answering the phone, and a website has to pay for itself.",
+  "I would rather explain a trade-off in plain language than hand over something you cannot maintain. If you want the fuller picture of my background, my LinkedIn and GitHub are linked below.",
+  "I am taking on freelance projects now. Tell me what you need it to do and I will tell you straight whether I am the right person to build it.",
 ];
