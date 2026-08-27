@@ -2,6 +2,7 @@ import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import AmbientBackground from "@/components/AmbientBackground";
+import ParticleField from "@/components/motion/ParticleField";
 
 /* Deliberately no next/font/google here — see references/critical-fixes.md.
    Fetching a font from Google during compilation makes the dev server stall
@@ -11,11 +12,11 @@ import AmbientBackground from "@/components/AmbientBackground";
 
 export const metadata = {
   title: {
-    default: "Saad Khizer — Full-Stack Web Developer (MERN)",
+    default: "Saad Khizer — Full-Stack Web Developer",
     template: "%s · Saad Khizer",
   },
   description:
-    "Full-stack web developer building real-time apps with React, Node, Express and MongoDB. REST APIs, JWT auth, integrations, deployed on Vercel and Render.",
+    "Full-stack web developer in Islamabad. I build business websites, ordering platforms and admin dashboards with React, Next.js, Node and Express — and deploy them.",
 };
 
 /* themeColor matches --background / the dark variant so mobile browser
@@ -35,6 +36,10 @@ export default function RootLayout({ children }) {
     <html lang="en" className="h-full antialiased">
       <body className="flex min-h-full flex-col">
         <AmbientBackground />
+        {/* Fixed behind every section rather than scoped to the hero, so the
+            constellation continues down the whole page instead of stopping
+            abruptly at the fold. */}
+        <ParticleField className="fixed inset-0 -z-10" />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground"

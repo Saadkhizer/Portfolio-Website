@@ -3,8 +3,15 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Canvas constellation field for a hero section. Hand-rolled rather than a
- * 3D library so the bundle stays small and it degrades cleanly.
+ * Canvas constellation field. Hand-rolled rather than a 3D library so the
+ * bundle stays small and it degrades cleanly.
+ *
+ * Positioning comes from `className` so the same component works either
+ * scoped to one section (`absolute inset-0`, the default) or fixed behind
+ * the entire page (`fixed inset-0 -z-10`, as in the root layout). Do not
+ * hardcode a position here — two positioning classes in one attribute
+ * resolve by stylesheet order, not attribute order, and the loser is
+ * whichever Tailwind emitted second.
  *
  * Reads color from --particle / --particle-opacity / --particle-link-opacity
  * CSS variables — keep these separate from --accent so the hero's motion can
@@ -13,7 +20,10 @@ import { useEffect, useRef } from "react";
  * Pauses off-screen, renders one static frame under prefers-reduced-motion,
  * and scales particle count with viewport area (capped for low-end devices).
  */
-export default function ParticleField({ className = "", density = 0.00008 }) {
+export default function ParticleField({
+  className = "absolute inset-0",
+  density = 0.00008,
+}) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -170,7 +180,7 @@ export default function ParticleField({ className = "", density = 0.00008 }) {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
+      className={`pointer-events-none h-full w-full ${className}`}
     />
   );
 }
