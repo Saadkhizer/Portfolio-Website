@@ -24,7 +24,7 @@ export default function Home() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-positive opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-positive" />
                 </span>
-                Available for freelance work
+                {PROFILE.availabilityNote}
               </p>
             </Reveal>
           )}
@@ -237,8 +237,8 @@ export default function Home() {
                 <dt className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
                   Availability
                 </dt>
-                <dd className="text-positive">
-                  {PROFILE.available ? "Open to new projects" : "Currently booked"}
+                <dd className={PROFILE.available ? "text-positive" : undefined}>
+                  {PROFILE.available ? PROFILE.availabilityNote : "Currently booked"}
                 </dd>
               </div>
             </dl>

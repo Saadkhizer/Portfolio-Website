@@ -16,6 +16,10 @@ export const PROFILE = {
   github: "https://github.com/Saadkhizer",
   location: "Islamabad, Pakistan",
   available: true,
+  // Shown in the hero pill and the About card. Says what he is open to, not
+  // just that he is open — a freelancer who also takes on local business work
+  // is a different offer to a freelancer alone, and clients sort on that.
+  availabilityNote: "Open to freelance and local business work",
 
   // Leave a channel as an empty string and its button simply does not render.
   // Better a missing button than one that goes nowhere.
