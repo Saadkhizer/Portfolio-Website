@@ -61,6 +61,59 @@ export const PROJECTS = [
       },
     ],
   },
+  {
+    slug: "saffron-sage",
+    name: "Saffron & Sage",
+    tagline: "Restaurant ordering system with an owner console",
+    context: "Own build — a complete restaurant platform, front to back",
+    year: "2026",
+    summary:
+      "A full restaurant site: customers browse a categorised menu, keep a cart between visits, sign in, and order for delivery or pickup with live status tracking. The owner gets a separate console to run the menu and work through incoming orders.",
+    tech: [
+      "React 18",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Zustand",
+      "Framer Motion",
+      "Node.js",
+      "Express",
+      "SQLite",
+      "JWT",
+      "Google OAuth",
+    ],
+    image: "/projects/saffron-sage.jpg",
+    imageAlt:
+      "The Saffron & Sage homepage, with a full-bleed dining photograph and a reservation call to action",
+    liveUrl: "https://saffron-sage-restaurant.vercel.app/",
+    repoUrl: "https://github.com/Saadkhizer/saffron-sage-restaurant",
+    highlights: [
+      "Categorised menu with search, filtering and popular badges",
+      "Cart that survives a refresh, delivery or pickup, and a live delivery fee",
+      "Email/password and Google sign-in, with checkout and dashboard behind auth",
+      "Order confirmation, live status tracking and full order history",
+      "Owner console: live stats, accept or advance orders, edit the menu and upload dish photos",
+      "Dark mode, loading skeletons, empty states and keyboard-accessible throughout",
+    ],
+    challenges: [
+      {
+        title: "Never trusting the browser with money",
+        body: "The cart lives in the browser, so the prices in it are whatever the browser says they are. On checkout the API takes only the item ids and quantities and recomputes every price from the database, then stores the total in cents rather than floats. A customer editing their cart in devtools changes what they ordered, never what they pay.",
+      },
+      {
+        title: "An owner console the owner can actually run",
+        body: "The restaurant needs to change prices, mark a dish unavailable at 7pm and add a new item without calling me. The console covers menu items, categories, availability and photo uploads, with the upload endpoint capped at 5MB and restricted by MIME type so a mistake there cannot fill the disk or land an executable in the images folder.",
+      },
+      {
+        title: "A database with nothing to install",
+        body: "Data sits in SQLite through Node's built-in node:sqlite, so there is no native module to compile and no database server to provision. On a small restaurant's budget that removes a monthly bill and an entire class of deploy failure, and the schema still has proper tables for users, addresses, categories, menu items, orders and order lines.",
+      },
+      {
+        title: "Two hosts, one app",
+        body: "The React frontend runs on Vercel and the Express API on Render, which means CORS, an API base URL injected at build time, and a rewrite so that opening /checkout directly serves the app instead of a 404. I wrote a small in-memory rate limiter for the auth routes too, rather than adding a dependency for what a Map and a timestamp can do on a single instance.",
+      },
+    ],
+  },
 ];
 
 export function getProject(slug) {
