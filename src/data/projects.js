@@ -114,6 +114,57 @@ export const PROJECTS = [
       },
     ],
   },
+  {
+    slug: "sami-jee-decor",
+    name: "Sami Jee Decor",
+    tagline: "E-commerce store with local payments and an admin panel",
+    // TODO(Saad): confirm whether this was a paid client build, a pitch, or
+    // your own project, and correct this line.
+    context: "Online store for an interior-finishing business",
+    year: "2026",
+    summary:
+      "A full online store for a company selling wallpaper, blinds, flooring, artificial grass and wall panels. Customers filter and search a catalogue, order with JazzCash, Easypaisa, card or cash on delivery, and track the order afterwards. The owner runs the whole thing from an admin panel.",
+    tech: [
+      "React 18",
+      "Vite",
+      "React Router",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Node.js",
+      "Express",
+      "SQLite",
+      "JWT",
+      "Stripe",
+    ],
+    liveUrl: "https://decora-interiors.vercel.app/",
+    repoUrl: "https://github.com/Saadkhizer/Decora-interiors",
+    highlights: [
+      "Catalogue with category and price filters, sort, search and pagination",
+      "Cart, checkout, order confirmation and order tracking by reference number",
+      "Customer accounts with profile and order history",
+      "JazzCash, Easypaisa, card and cash on delivery, with a sandbox mode for testing",
+      "Admin panel: revenue and order dashboard, products, orders, inquiries, blog and project gallery",
+      "Quote requests, WhatsApp contact, showroom map, and accessible throughout",
+    ],
+    challenges: [
+      {
+        title: "Payment methods that Pakistani customers actually use",
+        body: "Most e-commerce tutorials stop at Stripe, which is not how people here pay. This takes JazzCash, Easypaisa, card and cash on delivery. Each gateway sits behind a common adapter with its own return handler, so adding another one later means writing one file rather than reworking checkout, and a sandbox mode lets the whole flow be tested without moving real money.",
+      },
+      {
+        title: "The price is whatever the server says it is",
+        body: "Carts live in the browser and browsers can be edited. The API accepts product ids and quantities, then recomputes the order total from the database before any payment is initiated. It is a small amount of code that closes the difference between a demo store and one you would let a real business take money through.",
+      },
+      {
+        title: "An admin panel wide enough to hand over",
+        body: "The owner needed more than a product list: orders and their payment status, customer inquiries, blog posts and the project gallery all had to be editable, with image uploads for each. The point of building that breadth is that the business never has to call me to change the site, which is also what makes the work worth paying for.",
+      },
+      {
+        title: "Zero-config data, deliberately",
+        body: "SQLite through better-sqlite3 means the database is a file. No server to provision, no monthly cost, no connection pool to misconfigure. For a business this size that is the right trade: the ceiling is high enough that they will not hit it, and the setup cost is nothing.",
+      },
+    ],
+  },
 ];
 
 export function getProject(slug) {
