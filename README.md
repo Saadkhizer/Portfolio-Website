@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Portfolio — Saad Khizer
 
-## Getting Started
+Personal portfolio site for a full-stack web developer based in Islamabad.
 
-First, run the development server:
+**Live:** https://saadkhizer.vercel.app
+
+Built with Next.js 16 (App Router) and Tailwind CSS v4. Every page is statically
+generated — there is no database, no API and no environment variables to
+configure.
+
+## What's in it
+
+- Hero, Services, Work, Stack, Process, About and a contact panel
+- A case study page per project, generated from `src/data/projects.js`
+- Theme control with three states — system, light, dark — persisted in
+  `localStorage` and applied before first paint so the page never flashes the
+  wrong theme
+- Mobile navigation panel with Escape-to-close and scroll lock
+- Canvas constellation background: three-colour blend, per-particle shimmer,
+  pauses off-screen and renders a single static frame under
+  `prefers-reduced-motion`
+
+## Running it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+To view it on a phone on the same network, add that machine's LAN address to
+`allowedDevOrigins` in `next.config.mjs` — Next.js 16 blocks dev-server requests
+from other hosts by default.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build    # production build
+npm start        # serve the production build
+```
 
-## Learn More
+## Editing content
 
-To learn more about Next.js, take a look at the following resources:
+Content is separate from layout. In most cases you do not need to touch any JSX.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| File | Holds |
+| --- | --- |
+| `src/data/site.js` | Name, role, headline, contact details, services, stack, process, about copy |
+| `src/data/projects.js` | One object per project: summary, tech, links, screenshot, case-study content |
+| `src/app/globals.css` | Design tokens — colours, fonts, background motion |
+| `public/projects/` | Project screenshots (1200px wide JPEGs) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Adding a project means adding one object to `PROJECTS`. Its card appears in the
+Work grid and its case study is pre-rendered at `/work/<slug>` automatically.
+The grid switches from one column to two once there is a second project.
 
-## Deploy on Vercel
+Contact channels render only when filled in — leave `whatsapp` or `linkedin`
+empty in `site.js` and no button appears, rather than a link that goes nowhere.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/
+│   ├── layout.js            root layout, metadata, no-flash theme script
+│   ├── page.js              all homepage sections
+│   ├── globals.css          design tokens (light + dark)
+│   └── work/[slug]/page.js  case study pages
+├── components/
+│   ├── SiteHeader.jsx       nav, mobile panel, theme toggle
+│   ├── SiteFooter.jsx
+│   ├── SectionHeading.jsx
+│   ├── ThemeToggle.jsx
+│   ├── AmbientBackground.jsx
+│   └── motion/              Reveal, Stagger, MagneticButton, ParticleField
+└── data/
+    ├── site.js
+    └── projects.js
+```
+
+## Notes
+
+Fonts are the system stack rather than `next/font/google` — that loader fetches
+from Google during compilation and can stall the dev server on a slow or
+restricted network.
+
+Deployment is automatic: pushing to `main` triggers a Vercel build.

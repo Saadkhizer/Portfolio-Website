@@ -64,11 +64,11 @@ export const PROJECTS = [
   {
     slug: "saffron-sage",
     name: "Saffron & Sage",
-    tagline: "Restaurant ordering system with an owner console",
+    tagline: "Food ordering app with a live owner console",
     context: "Own build — a complete restaurant platform, front to back",
     year: "2026",
     summary:
-      "A full restaurant site: customers browse a categorised menu, keep a cart between visits, sign in, and order for delivery or pickup with live status tracking. The owner gets a separate console to run the menu and work through incoming orders.",
+      "A fast-food ordering site: customers browse a categorised menu, keep a cart between visits, sign in, and order for delivery or pickup with live status tracking. The owner gets a separate console to run the menu and work through incoming orders as they arrive.",
     tech: [
       "React 18",
       "TypeScript",
@@ -84,8 +84,11 @@ export const PROJECTS = [
     ],
     image: "/projects/saffron-sage.jpg",
     imageAlt:
-      "The Saffron & Sage homepage, with a full-bleed dining photograph and a reservation call to action",
-    liveUrl: "https://saffron-sage-restaurant.vercel.app/",
+      "The Saffron & Sage ordering homepage, with a flame-grilled burger, a 30-minute delivery badge and an Order Now button",
+    // The plain saffron-sage-restaurant.vercel.app domain serves an older,
+    // unrelated fine-dining site. THIS repo deploys to the -bay domain. Do not
+    // "tidy" this URL back to the short one without checking what it serves.
+    liveUrl: "https://saffron-sage-restaurant-bay.vercel.app/",
     repoUrl: "https://github.com/Saadkhizer/saffron-sage-restaurant",
     highlights: [
       "Categorised menu with search, filtering and popular badges",
