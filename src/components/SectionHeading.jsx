@@ -19,3 +19,5 @@ export default function SectionHeading({ index, label, title, children }) {
     </Reveal>
   );
 }
+
+

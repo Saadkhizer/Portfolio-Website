@@ -136,6 +136,9 @@ export const PROJECTS = [
       "JWT",
       "Stripe",
     ],
+    image: "/projects/sami-jee-decor.jpg",
+    imageAlt:
+      "The Sami Jee Decor storefront, showing the category navigation and an interior photograph",
     liveUrl: "https://decora-interiors.vercel.app/",
     repoUrl: "https://github.com/Saadkhizer/Decora-interiors",
     highlights: [
