@@ -9,6 +9,105 @@
 
 export const PROJECTS = [
   {
+    slug: "sheen",
+    name: "Sheen",
+    tagline: "Shawarma ordering demo with a scroll-flight hero",
+    context: "Client demo build for a shawarma restaurant in Bahria Enclave, Islamabad",
+    year: "2026",
+    summary:
+      "A branded ordering site for a shawarma restaurant: a scroll-scrubbed cinematic hero, a 37-item menu with search and categories, per-wrap customization, and a checkout that hands the order to WhatsApp. Ordering and payment are deliberately not connected — this is the site the owner sees before deciding to build the real one.",
+    tech: [
+      "Next.js 16",
+      "React",
+      "Tailwind CSS v4",
+      "Framer Motion",
+      "Supabase",
+      "Playwright",
+      "Sharp",
+    ],
+    image: "/projects/sheen.jpg",
+    imageAlt:
+      "The Sheen homepage, with the Big On Shawarma headline over a warm evening shot of the restaurant front",
+    liveUrl: "https://sheen-restaurant.vercel.app/",
+    repoUrl: "https://github.com/Saadkhizer/Sheen-restaurant-",
+    highlights: [
+      "Scroll-scrubbed camera-flight hero — video legs with poster frames, no cuts",
+      "37-item menu with search, categories and a deals section",
+      "Per-wrap customization: size, cheese and extras, each priced separately",
+      "Cart priced in integer paisa and re-derived from the catalogue on restore",
+      "WhatsApp order preview with an explicit copy action — nothing sends itself",
+      "Demo receipt at /order/CODE, held for 24 hours in the originating tab only",
+      "Native modal semantics throughout: focus restore, scroll lock, Escape to close",
+    ],
+    challenges: [
+      {
+        title: "A demo that cannot accidentally take a real order",
+        body: "The whole point was to show the owner a working site before any backend exists, which makes an accidental live order the worst possible outcome. Direct server ordering is disabled in the server action itself rather than behind a flag, card payments cannot be switched on by an environment variable, and the production order path exists only as a documented boundary. The demo receipt is a real receipt in every way except that it never leaves the tab it was created in.",
+      },
+      {
+        title: "Money that survives an edited browser",
+        body: "Prices stay integer paisa until the moment they are displayed, so no float rounding ever touches a total. The cart persists to localStorage, but on restore every line's product identity and extras are regenerated against the catalogue — a customer who edits their stored cart changes what they ordered, never what it costs.",
+      },
+      {
+        title: "37 MB of menu photography down to 879 KB",
+        body: "The menu photos came in at roughly 37 MB, which on a phone on mobile data is not a website at all. A Sharp script generates 1400px WebP copies from the original sources, keeps the originals untouched, and writes the social image and favicons in the same pass. Components use responsive Next Image sizing with selective hero preload and a placeholder for any image that fails.",
+      },
+      {
+        title: "A cinematic hero that does not hijack the page",
+        body: "The hero is a scroll-scrubbed camera flight, which is exactly the kind of effect that usually breaks native scrolling and strands anyone on a slow connection. The scrub engine drives pre-rendered video legs from real scroll position rather than taking scroll over, poster frames carry the first paint, and reduced-motion settings drop it to a still. The page heading stays in the markup either way, so the hero is never load-bearing for the content.",
+      },
+    ],
+  },
+  {
+    slug: "marais",
+    name: "MARAIS",
+    tagline: "Fashion e-commerce with accounts and a real checkout",
+    context: "Own build — a production-grade storefront, front to back",
+    year: "2026",
+    summary:
+      "A fashion storefront: browse the collection, build a cart, and move through a three-step checkout that the server reprices before it will accept the order. Customers get real accounts with order history, and any order can be looked up later from a shared reference link.",
+    tech: [
+      "React 19",
+      "Vite",
+      "Tailwind CSS v4",
+      "React Router",
+      "Express 5",
+      "Supabase",
+      "PostgreSQL",
+    ],
+    image: "/projects/marais.jpg",
+    imageAlt:
+      "The MARAIS storefront, with the Considered essentials, made to last headline above the autumn winter collection",
+    liveUrl: "https://marais-shopping-ecommerce.vercel.app/",
+    repoUrl: "https://github.com/Saadkhizer/Marais-shopping-Ecommerce",
+    highlights: [
+      "Storefront with categories, product grid, editorial and lookbook sections",
+      "Three-step checkout — contact, shipping, review — validated at every step",
+      "Supabase Auth accounts, guarded order history, email confirmation",
+      "Order confirmation that works from a shared link, not just after checkout",
+      "Row level security with the matching table grants, verified by impersonation",
+      "Demo mode with local seed data so the whole flow runs with no database",
+    ],
+    challenges: [
+      {
+        title: "The server decides what the order costs",
+        body: "The client posts product ids, sizes and quantities and nothing else. Prices, shipping and the total all come back from the database at the moment the order is created. A checkout that accepts a total from the browser is a checkout that accepts a discount from the browser, and that difference is most of what separates a demo store from one a business can take money through.",
+      },
+      {
+        title: "A policy that looks right and still returns permission denied",
+        body: "Postgres checks table privileges before it evaluates a row level security policy, so a flawless policy on a table with no GRANT fails with 42501 before the policy ever runs. That cost an evening. The schema now ships create policy and grant select together, and the README shows how to verify by impersonating the anon role rather than by reading the policy and assuming it works.",
+      },
+      {
+        title: "Showing a client the account flow before there is a database",
+        body: "Clients want to see sign-in, checkout and order history in the first meeting, which is usually before anyone has provisioned anything. With no keys present the app runs in demo mode against local seed data and an in-memory session, and every screen using it says so on the page. Honest fallbacks beat a broken deploy in front of a client.",
+      },
+      {
+        title: "A React Router app that survives a refresh on /checkout",
+        body: "A static host serves files, and there is no file at /checkout, so a refresh there returns a 404 on a site that works perfectly while you click through it. A _redirects file and a vercel.json rewrite hand every path back to the app. It is two small files, and without them the deployed site is broken on every route except the home page.",
+      },
+    ],
+  },
+  {
     slug: "hafsum",
     name: "Hafsum Coffee & Cake",
     tagline: "Ordering platform with a live staff console",
@@ -121,9 +220,7 @@ export const PROJECTS = [
     slug: "sami-jee-decor",
     name: "Sami Jee Decor",
     tagline: "E-commerce store with local payments and an admin panel",
-    // TODO(Saad): confirm whether this was a paid client build, a pitch, or
-    // your own project, and correct this line.
-    context: "Online store for an interior-finishing business",
+    context: "Paid client build for an interior-finishing business in Islamabad",
     year: "2026",
     summary:
       "A full online store for a company selling wallpaper, blinds, flooring, artificial grass and wall panels. Customers filter and search a catalogue, order with JazzCash, Easypaisa, card or cash on delivery, and track the order afterwards. The owner runs the whole thing from an admin panel.",
